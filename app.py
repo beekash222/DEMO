@@ -52,8 +52,26 @@ def main():
 @app.route('/predict',methods=['GET','POST'])
 def predict():
     video_id = request.form['video_id']
-    predictions = YouTubeTranscriptApi.get_transcript(video_id)
-    return render_template('main.html', prediction_text= predictions)
+    match = re.search(r"youtube\.com/.*v=([^&]*)", video_url)
+    if match:
+       result = match.group(1)
+    else:
+       result = ""
+    # get the html content
+    content = requests.get(video_id)
+    soup = bs(content.content, "html.parser")
+    title = soup.find("span", attrs={"class": "watch-title"}).text.strip()
+    name =  soup.find("div", attrs={'class': "yt-user-info"}).text.strip()
+    try:
+        text = YouTubeTranscriptApi.get_transcript(result)
+        text_new = []
+        for i in range(0,len(text)):
+           text_new.append(text[i]['text'])
+           text_new1 = ' '.join(text_new)
+    except:
+        text = soup.find("span", attrs={"class": "watch-title"}).text.strip()
+        text_new1 = text
+    return render_template('main.html', prediction_text= text_new1)
 
 
     
