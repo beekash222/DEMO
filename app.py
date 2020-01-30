@@ -32,6 +32,10 @@ from flask import Flask, flash, request, redirect, url_for
 from flask import Flask, url_for, send_from_directory, request
 import gunicorn
 from youtube_transcript_api import YouTubeTranscriptApi
+import requests
+from bs4 import BeautifulSoup as bs
+from youtube_transcript_api import YouTubeTranscriptApi
+import re
                    
 app = Flask(__name__)
 CORS(app)
