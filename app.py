@@ -208,3 +208,7 @@ def predict():
 
     #return render_template('main.html', prediction_text= "Fake Rate={}".format(np.round(y1, 4)*100)+"%"+"--->"+m+ "   Sentiments--->"+df_usa_polarity_desc["Sentiment_Type"].values+"Category--->"+predictions)
     return render_template('main.html', prediction_text= "Fake Rate={}".format(np.round(y1, 4)*100)+"%"+"--->"+m,para = "Sentiments={}".format(df_usa_polarity_desc["Sentiment_Type"].values),para1="Category={}".format(predictions))
+
+  if __name__=="__main__":
+#    port=int(os.environ.get('PORT',5000))
+     app.run(host='0.0.0.0', port=8080, debug=True)
